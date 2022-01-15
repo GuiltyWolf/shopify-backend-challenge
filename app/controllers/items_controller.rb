@@ -4,6 +4,12 @@ class ItemsController < ApplicationController
   # GET /items or /items.json
   def index
     @items = Item.all
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @items.to_csv, filename: "items-#{Date.today}.csv"}
+      format.json { render json: @items }
+    end
   end
 
   # GET /items/1 or /items/1.json
